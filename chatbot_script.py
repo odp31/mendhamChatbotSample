@@ -8,7 +8,8 @@ responses ={
   "how are you": "I'm doing well, thank you. How are you?",
   "what's your name": "You can call me Olivia, your Mendham AI assitant.",
   "bye": "goodbye! have a nice day.",
-  "what time is it": "It's currently {time}", }
+  "what time is it": "It's currently {time}", 
+}
 
 # function to process user input
 def respond(message):
@@ -35,3 +36,4 @@ def chat():
 
 # run chatbot
 chat() 
+
