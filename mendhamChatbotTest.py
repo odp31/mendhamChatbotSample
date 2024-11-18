@@ -1,4 +1,8 @@
 import re
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+
 
 # response dictionary
 responses ={
@@ -13,19 +17,33 @@ responses ={
 
 # function to process user input
 def respond(message):
-    message = message.translate(str.maketrans('', '', string.punctuation))    # ignores punctuation in user input 
+  # pre process message(remove loweracse, punctuation)
+  message = message.lower().translate(str.maketrans('','',string.punctuation))
 
-    for pattern, response in responses.items():
-        match = re.search(pattern, message, re.IGNORECASE)                    # ignores case in user input 
-        if match:
-            if pattern == "what time is it":
-                import datetime
-                now = datetime.datetime.now()
-                response = response.format(time=now.strftime("%H:%M"))
-            return response
-    return "I'm not sure I understand. Can you rephrase that?"                # error message bot sends if doesn't understand prompt
+  # tokenize message 
+  tokens = word_tokenize(message)
 
+  # stem message 
+  stemmer = PorterStemmer()
+  stemmed_tokens = [stemmer.stem(token) for token in tokens]
 
+  for pattern, response in response.items():
+    if pattern in stemmed_tokens or pattern in tokens:
+      if pattern == "what time is it":
+        import datetime
+        now = datetime.datetime.now()
+        response = response.format(time=now.strftime("%H:%M"))
+      return response
+
+    # check for specific instents (e.g., greeting, question request)
+    if any(token in ["hi", "hello", "hey"] for token in tokens):
+      return "Hello! How can i help you today?"
+    elif any(token in ["what", "how", "why"] for token in tokens:
+      return "I'm still underdevelopment, but I'll do my best to answer your question."
+    else:
+      return "i'm not sure i understand. can you repharse that?"
+      
+    
 # create a simple chat loop:
 def chat():
   while True:
