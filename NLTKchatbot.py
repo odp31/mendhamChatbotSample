@@ -1,4 +1,5 @@
 # install necessary NLTK data:
+# run four lines below in separate python script to download necessary data files 
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
@@ -10,7 +11,8 @@ import re
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
-
+from nltk.chunk import ne_chunk
+import random
 
 # response dictionary
 responses ={
