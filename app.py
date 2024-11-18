@@ -20,7 +20,9 @@ responses ={
   "what's your name": "You can call me Olivia, your Mendham AI assitant.",
   "bye": "goodbye! have a nice day.",
   "what time is it": "It's currently {time}",
-}
+  "test":"testresponse",
+  "where is mendham": "new jersey!",
+  }
 
 # function to process user input
 def respond(message):
