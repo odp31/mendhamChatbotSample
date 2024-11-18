@@ -27,21 +27,27 @@ def respond(message):
   stemmer = PorterStemmer()
   stemmed_tokens = [stemmer.stem(token) for token in tokens]
 
-  for pattern, response in response.items():
-    if pattern in stemmed_tokens or pattern in tokens:
-      if pattern == "what time is it":
-        import datetime
-        now = datetime.datetime.now()
-        response = response.format(time=now.strftime("%H:%M"))
-      return response
+  # part of speech tagging
+  pos_tags = nltk.pos_tag(tokens)
 
-    # check for specific instents (e.g., greeting, question request)
-    if any(token in ["hi", "hello", "hey"] for token in tokens):
-      return "Hello! How can i help you today?"
-    elif any(token in ["what", "how", "why"] for token in tokens:
-      return "I'm still underdevelopment, but I'll do my best to answer your question."
+  # named entity recognition
+  named_entities = ne_chunk(pos_tags)
+
+  # check for specifc intents using regular expressions and NLTK
+  if re.search(r"\b(hi|hello|hey)\b", message):
+    return random.choice(["Hello! How can I help you today?", "Hi there! What's on your mind?"])
+  elif re.search(r"\b(what|how|why)\b", message):
+    # USE NLTK for advanced NLP
+    question_words = [word for word, tag in pos_tags if tag.startswith('W')]     # ID question words
+    entities = [entity for entity in named_entities if isinstance(entity, nltk.tree.Tree
+                                                                 )] # extract named entities
+    if entities:
+      # use entities to provide more specific responses
+      return "I found these entities in your question: {}. How can I help you futher?".format(entities)
     else:
-      return "i'm not sure i understand. can you repharse that?"
+      return "I'm still under developent but I'll do by best to answer your question."
+  else:
+    return"I apologize, I don't understand. can i help with something else?"
       
     
 # create a simple chat loop:
