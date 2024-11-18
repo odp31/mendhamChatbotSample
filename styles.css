@@ -1,0 +1,6 @@
+body {
+    background-image: url('path/to/your/mendham.jpg');
+    background-size: cover; /* Cover the entire screen */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-attachment: fixed; /* Keep the image fixed while scrolling */
+}
