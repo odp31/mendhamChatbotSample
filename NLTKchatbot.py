@@ -6,6 +6,9 @@ nltk.download('maxent_ne_chunker')
 nltk.download('words')
 
 
+from flask import Flask, render_template, request 
+app = Flask(__name__)
+
 
 import re
 import nltk
@@ -65,15 +68,19 @@ def respond(message):
   else:
     return"I apologize, I don't understand. can i help with something else?"
       
-    
+@app.route('/')
+def index():
+  return render_template('index.html')
+
+@app.route('/chat', methods=['POST'])
 # create a simple chat loop:
 def chat():
-  while True:
-    user_input = input("You: ")
-    if user_input.lower() == "quit":
-      break
-    response = respond(user_input)
-    print("Mendham AI Assistant:", response)
+  user_message = request.form['user_message']
+  response = respond(user_message)
+  return response 
+
+if __name__ == '__main__':
+  app.run(debug=True)
 
 
 # run chatbot
