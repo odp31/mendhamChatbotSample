@@ -53,7 +53,13 @@ def respond(message):
       # use entities to provide more specific responses
       return "I found these entities in your question: {}. How can I help you futher?".format(entities)
     else:
-      return "I'm still under developent but I'll do by best to answer your question."
+      # use part of speech tags to ID question types
+      if "VBZ" in [tag for word, tag in pos_tags]:
+        return "i can provide info or answer your question."
+      elif "VBD" in [tag for word, tag in pos_tags]:
+        return "i can help you undertand past events or actions. what do you want to know?"
+      else:
+        return "I'm still under developent but I'll do by best to answer your question."
   else:
     return"I apologize, I don't understand. can i help with something else?"
       
